@@ -1,0 +1,14 @@
+{
+    "name": "mapalagama/uaship",
+    "description": "Urban Airship Lib for Laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hasitha Mapalagama",
+            "email": "dev.hasitha@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    }
+}
