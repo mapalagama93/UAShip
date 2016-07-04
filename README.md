@@ -1,9 +1,19 @@
 # UAShip
 ![Build Status](https://img.shields.io/wercker/ci/wercker/docs.svg)
 
-Urban Airship library for Laravel 5
+Urban Airship library for Laravel 5. [UAShip](https://packagist.org/packages/mapalagama/uaship)
 
 ## Usage
+
+##### Requirements
+- Composer
+- PHP >= 5.6
+
+##### Install
+```
+composer require mapalagama/uaship
+```
+
 
 ##### Import
 ##
