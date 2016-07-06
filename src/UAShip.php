@@ -34,8 +34,6 @@ class UAShip
     //message types
     const IOS = "ios_channel";
     const ANDROID = "android_channel";
-    const WP = "";
-    const BB = "";
 
     //store username and password
     private $app_key;
@@ -85,7 +83,7 @@ class UAShip
             $eachDevice->{$device[0]} = $device[1];
             $_AND[] = $eachDevice;
         }
-        $_audience->AND = $_AND;
+        $_audience->OR = $_AND;
 
         //notifications
         $notification = new \stdClass();
@@ -97,10 +95,15 @@ class UAShip
 
         $notification->ios = $ios;
 
+        //android
+        $android = new \stdClass();
+        $android->extra = $this->extra;
+
+        $notification->android = $ios;
+
         $this->message->audience = $_audience;
         $this->message->notification = $notification;
-        $this->message->device_types = "all";
-
+        $this->message->device_types = ["ios", "android"];
         return json_encode($this->message);
 
     }
@@ -119,7 +122,6 @@ class UAShip
             'Accept: application/vnd.urbanairship+json; version=3',
             'Authorization: Basic ' . base64_encode($this->app_key . ":" . $this->master_key)
         ));
-        var_dump('Authorization: Basic ' . base64_encode($this->app_key . ":" . $this->master_key));
         $result = curl_exec($ch);
 
         return $result;
