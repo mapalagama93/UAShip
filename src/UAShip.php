@@ -44,6 +44,7 @@ class UAShip
     private $alert = null;
     private $extra = null;
     private $message = null;
+    private $badge = null;
 
     public function __construct($appKey, $masterKey)
     {
@@ -66,6 +67,12 @@ class UAShip
     {
         $this->alert = $alert;
     }
+
+    public function addBadge($count = 1)
+    {
+        $this->badge = "+" . $count;
+    }
+
 
     public function send()
     {
@@ -92,18 +99,21 @@ class UAShip
         //ios
         $ios = new \stdClass();
         $ios->extra = $this->extra;
-
+        if ($this->badge != null) {
+            $ios->badge = $this->badge;
+        }
         $notification->ios = $ios;
 
         //android
         $android = new \stdClass();
         $android->extra = $this->extra;
 
-        $notification->android = $ios;
+        $notification->android = $android;
 
         $this->message->audience = $_audience;
         $this->message->notification = $notification;
         $this->message->device_types = ["ios", "android"];
+        var_dump(json_encode($this->message));
         return json_encode($this->message);
 
     }
