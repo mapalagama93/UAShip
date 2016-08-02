@@ -7,12 +7,12 @@ class UAShipTest extends \PHPUnit_Framework_TestCase{
         $e = new stdClass();
         $e->question = "what is your name ? ";
 
-        $uaShip = new \Mapalagama\UAShip\UAShip("Tl1S4qwPSkmXN-FZ3Kgv9g", "wU9-KmAQRPOBqDVt8Mp6aQ");
+        $uaShip = new \Mapalagama\UAShip\UAShip("-FZ3Kgv9g", "wU9-");
         //add message
         $uaShip->addAlert("This is alert..!");
 
         //add channels
-        $uaShip->addChannel(\Mapalagama\UAShip\UAShip::IOS,["bbb9ef52-5216-4259-84eb-9b3eccaf700d"]);
+        $uaShip->addChannel(\Mapalagama\UAShip\UAShip::IOS,["d30767fa--4513--"]);
         //add extra
         $uaShip->addExtra($e);
         //send

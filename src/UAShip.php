@@ -113,7 +113,6 @@ class UAShip
         $this->message->audience = $_audience;
         $this->message->notification = $notification;
         $this->message->device_types = ["ios", "android"];
-        var_dump(json_encode($this->message));
         return json_encode($this->message);
 
     }
@@ -122,7 +121,6 @@ class UAShip
     private function curl($body)
     {
         $ch = curl_init();
-
         curl_setopt($ch, CURLOPT_URL, "https://go.urbanairship.com/api/push/");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -133,7 +131,6 @@ class UAShip
             'Authorization: Basic ' . base64_encode($this->app_key . ":" . $this->master_key)
         ));
         $result = curl_exec($ch);
-
         return $result;
     }
 }
