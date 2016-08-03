@@ -50,7 +50,7 @@ class UAShip
     {
         $this->app_key = $appKey;
         $this->master_key = $masterKey;
-        $this->message = new \stdClass();
+        $this->message = array();
     }
 
     public function addExtra($json)
@@ -82,37 +82,75 @@ class UAShip
 
     private function buildJson()
     {
-        //devices
-        $_audience = new \stdClass();
-        $_AND = array();
-        foreach ($this->audience as $device) {
-            $eachDevice = new \stdClass();
-            $eachDevice->{$device[0]} = $device[1];
-            $_AND[] = $eachDevice;
+
+        foreach ($this->audience as $__a) {
+
+            foreach ($__a[1] as $__b) {
+
+                //devices
+                $_audience = new \stdClass();
+                $_audience->{$__a[0]} = $__b;
+
+                //notifications
+                $notification = new \stdClass();
+                $notification->alert = $this->alert;
+
+                //ios
+                $ios = new \stdClass();
+                $ios->extra = $this->extra;
+                if ($this->badge != null) {
+                    $ios->badge = $this->badge;
+                }
+                $notification->ios = $ios;
+
+                //android
+                $android = new \stdClass();
+                $android->extra = $this->extra;
+
+                $notification->android = $android;
+                $_msg = new \stdClass();
+                $_msg->audience = $_audience;
+                $_msg->notification = $notification;
+                $_msg->device_types = ["ios", "android"];
+                $this->message[] = $_msg;
+            }
+
         }
-        $_audience->OR = $_AND;
 
-        //notifications
-        $notification = new \stdClass();
-        $notification->alert = $this->alert;
+//        //devices
+//        $_audience = new \stdClass();
+//        $_AND = array();
+//        foreach ($this->audience as $device) {
+//            $eachDevice = new \stdClass();
+//            $eachDevice->{$device[0]} = $device[1];
+//            $_AND[] = $eachDevice;
+//        }
+//        $_audience->AND = $_AND;
+//
+//        //notifications
+//        $notification = new \stdClass();
+//        $notification->alert = $this->alert;
+//
+//        //ios
+//        $ios = new \stdClass();
+//        $ios->extra = $this->extra;
+//        if ($this->badge != null) {
+//            $ios->badge = $this->badge;
+//        }
+//        $notification->ios = $ios;
+//
+//        //android
+//        $android = new \stdClass();
+//        $android->extra = $this->extra;
+//
+//        $notification->android = $android;
+//
+//        $this->message->audience = $_audience;
+//        $this->message->notification = $notification;
+//        $this->message->device_types = ["ios", "android"];
 
-        //ios
-        $ios = new \stdClass();
-        $ios->extra = $this->extra;
-        if ($this->badge != null) {
-            $ios->badge = $this->badge;
-        }
-        $notification->ios = $ios;
 
-        //android
-        $android = new \stdClass();
-        $android->extra = $this->extra;
-
-        $notification->android = $android;
-
-        $this->message->audience = $_audience;
-        $this->message->notification = $notification;
-        $this->message->device_types = ["ios", "android"];
+        echo json_encode($this->message);
         return json_encode($this->message);
 
     }
